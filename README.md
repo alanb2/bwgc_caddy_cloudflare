@@ -7,5 +7,5 @@ This is the proxy container repository for the [Bitwarden self-hosted on Google 
 Base Image: `caddy:alpine`
 
 Changes to Base Image: 
-- Add caddy-dns/cloudflare module for DNS-01 ACME validation support
+- Add [caddy-dns/cloudflare](https://github.com/caddy-dns/cloudflare) module for DNS-01 ACME validation support
 - Add tzdata package so timezone is set using `TZ` env variable
