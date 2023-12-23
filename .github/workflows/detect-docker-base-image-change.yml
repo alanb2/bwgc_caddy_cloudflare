@@ -31,13 +31,14 @@ jobs:
       - name: Get Image Names
         run: |
           #echo "IMAGE_BASE=docker://$(cat Dockerfile | gawk 'match($0, /^FROM\s+(.+)$/, groups) {print groups[1]}')" | tee -a $GITHUB_ENV
+          echo "IMAGE_BASE=docker://caddy:alpine" | tee -a $GITHUB_ENV
           echo "IMAGE_DERIVED=docker://ghcr.io/${GITHUB_REPOSITORY}:master" | tee -a $GITHUB_ENV
 
       - name: Docker Image Update Checker
         id: baseupdatecheck
         uses: ClementTsang/docker-check-base-image-diff@v0.0.2
         with:
-          base-image: caddy:alpine
+          base-image: ${{ env.IMAGE_BASE }}
           derived-image: ${{ env.IMAGE_DERIVED }}
 
   call-build:
