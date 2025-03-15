@@ -30,6 +30,7 @@ jobs:
           echo "IMAGE_BASE=$(awk '/^FROM/{print $2; exit}' Dockerfile)" | tee -a $GITHUB_ENV
           echo "IMAGE_DERIVED=ghcr.io/${GITHUB_REPOSITORY}:master" | tee -a $GITHUB_ENV
 
+
       - name: Check if update available
         id: check
         uses: lucacome/docker-image-update-checker@v2.0.0
