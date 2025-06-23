@@ -10,8 +10,8 @@ jobs:
 
   check-update:
     runs-on: ubuntu-latest
-   # permissions:
-   #   actions: write  # for Keepalive
+    permissions:
+      contents: write  # for Keepalive
     outputs:
       needs-updating: ${{ steps.check.outputs.needs-updating }}
 
@@ -42,6 +42,17 @@ jobs:
       - name: Debug Output
         run: |
           echo "Differs output: ${{ steps.check.outputs.needs-updating }}"
+
+      - name: Keepalive commit
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          # Crea o aggiorna un file per innescare un commit
+          echo "Last run: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" > .github/workflows/last-run.txt
+          git add .github/workflows/last-run.txt
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Keepalive: Workflow run on $(date -u +"%Y-%m-%d")" && git push)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Assicurati che GITHUB_TOKEN sia disponibile  
 
   call-build:
     needs: check-update
