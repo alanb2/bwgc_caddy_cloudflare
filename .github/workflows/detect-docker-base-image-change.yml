@@ -48,7 +48,7 @@ jobs:
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
           # Crea o aggiorna un file per innescare un commit
-          echo "Last run: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" > .github/workflows/last-run.txt
+          echo "Last run: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" > last-run.txt
           git add last-run.txt
           git diff --quiet && git diff --staged --quiet || (git commit -m "Keepalive: Workflow run on $(date -u +"%Y-%m-%d")" && git push)
         env:
